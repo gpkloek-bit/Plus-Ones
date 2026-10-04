@@ -1,9 +1,10 @@
 /* PlusOnes — site script. Geen build-stap nodig. */
 var EN = {
   "contact": "contact",
-  "Mail Joep Voskuilen": "Email Joep Voskuilen",
-  "Mail Guido Kloek": "Email Guido Kloek",
-  "Je mailprogramma opent met je bericht aan Joep. Verstuur het daar, dan reageren we binnen één werkdag.": "Your email app opens with your message to Joep. Send it from there and we will reply within one working day.",
+  "Neem contact op met Joep Voskuilen": "Contact Joep Voskuilen",
+  "Neem contact op met Guido Kloek": "Contact Guido Kloek",
+  "Je bericht is verstuurd naar Joep en Guido. We reageren binnen één werkdag.": "Your message has been sent to Joep and Guido. We will reply within one working day.",
+  "E-mail": "Email",
   "Koepelgevangenis": "Koepelgevangenis",
   "Koepelplein 1": "Koepelplein 1",
   "2031 WL Haarlem": "2031 WL Haarlem",
@@ -246,12 +247,11 @@ var EN = {
   'use strict';
   var doc = document, root = doc.documentElement;
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var MAIL = 'joep@plusones.ai';
 
   /* ---------- language ---------- */
   var ERR = {
-    nl: { name: 'Vul je naam in.', company: 'Vul de naam van je bedrijf in.', size: 'Kies een bedrijfsgrootte.', question: 'Vertel in een paar woorden waar je mee zit (minimaal 10 tekens).', check: 'Controleer de gemarkeerde velden.', menu: 'menu', close: 'sluit', ofWord: ' van ', goto: 'Ga naar case ' },
-    en: { name: 'Please enter your name.', company: 'Please enter your company name.', size: 'Please choose a company size.', question: 'Tell us in a few words what you need (at least 10 characters).', check: 'Please check the highlighted fields.', menu: 'menu', close: 'close', ofWord: ' of ', goto: 'Go to case ' }
+    nl: { name: 'Vul je naam in.', company: 'Vul de naam van je bedrijf in.', email: 'Vul een geldig e-mailadres in.', size: 'Kies een bedrijfsgrootte.', question: 'Vertel in een paar woorden waar je mee zit (minimaal 10 tekens).', check: 'Controleer de gemarkeerde velden.', sending: 'Bezig met versturen…', failed: 'Versturen is niet gelukt. Probeer het opnieuw of mail joep@plusones.ai.', menu: 'menu', close: 'sluit', ofWord: ' van ', goto: 'Ga naar case ' },
+    en: { name: 'Please enter your name.', company: 'Please enter your company name.', email: 'Please enter a valid email address.', size: 'Please choose a company size.', question: 'Tell us in a few words what you need (at least 10 characters).', check: 'Please check the highlighted fields.', sending: 'Sending…', failed: 'Sending failed. Please try again or email joep@plusones.ai.', menu: 'menu', close: 'close', ofWord: ' of ', goto: 'Go to case ' }
   };
   var META_NL = doc.querySelector('meta[name="description"]').content;
   var META_EN = 'PlusOnes takes SMEs from AI experiment to daily results with Claude. Strategy, Setup, Support. Registered Anthropic Partner.';
@@ -421,14 +421,15 @@ var EN = {
   /* ---------- contact form ---------- */
   var form = doc.getElementById('contact-form'), success = doc.getElementById('form-success');
   var fields = {
-    name: doc.getElementById('f-naam'), company: doc.getElementById('f-bedrijf'),
+    name: doc.getElementById('f-naam'), company: doc.getElementById('f-bedrijf'), email: doc.getElementById('f-email'),
     size: doc.getElementById('f-grootte'), question: doc.getElementById('f-vraag')
   };
-  var touched = {}, tried = false;
+  var touched = {}, tried = false, sending = false;
   function errors() {
     return {
       name: fields.name.value.trim() ? '' : 'name',
       company: fields.company.value.trim() ? '' : 'company',
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fields.email.value.trim()) ? '' : 'email',
       size: fields.size.value ? '' : 'size',
       question: fields.question.value.trim().length >= 10 ? '' : 'question'
     };
@@ -456,12 +457,27 @@ var EN = {
       e.preventDefault();
       var errs = errors(), first = Object.keys(errs).find(function (k) { return errs[k]; });
       if (first) { tried = true; refreshErrors(); fields[first].focus(); return; }
-      var subject = 'Kennismaking PlusOnes — ' + fields.company.value.trim();
-      var body = ['Naam: ' + fields.name.value.trim(), 'Bedrijf: ' + fields.company.value.trim(), 'Bedrijfsgrootte: ' + fields.size.value, '', fields.question.value.trim()].join('\n');
-      window.location.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-      doc.getElementById('sent-name').textContent = fields.name.value.trim().split(' ')[0];
-      form.hidden = true; success.hidden = false;
-      success.querySelector('h3').focus();
+      if (sending) return;
+      var status = doc.getElementById('form-status'), btn = form.querySelector('[type="submit"]');
+      sending = true; btn.disabled = true; status.textContent = t('sending');
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString()
+      }).then(function (res) {
+        if (!res.ok) throw new Error(res.status);
+        status.textContent = '';
+        doc.getElementById('sent-name').textContent = fields.name.value.trim().split(' ')[0];
+        form.hidden = true; success.hidden = false;
+        success.querySelector('h3').focus();
+      }).catch(function () {
+        status.textContent = t('failed');
+      }).then(function () { sending = false; btn.disabled = false; });
+    });
+    doc.querySelectorAll('a[href="#contact"]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        setTimeout(function () { if (!form.hidden) fields.name.focus({ preventScroll: true }); }, reduce ? 0 : 600);
+      });
     });
     doc.getElementById('form-reset').addEventListener('click', function () {
       form.reset(); touched = {}; tried = false; refreshErrors();
