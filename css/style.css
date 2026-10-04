@@ -258,3 +258,4 @@ html.kinetic .w > span{transform:translateY(105%)}
 .footer__col a.footer__li:hover{background:var(--green);border-color:var(--green);color:var(--fg)}
 .footer__base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;border-top:1px solid var(--inv-line);padding-top:20px;font-size:14px;color:var(--inv-body)}
 .footer__base a{color:var(--inv-body)}
+#contact{scroll-margin-top:80px}

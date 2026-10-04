@@ -28,7 +28,7 @@
         <button type="button" data-lang="nl" aria-pressed="true" lang="nl">NL</button>
         <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
       </div>
-      <a class="nav__cta" href="mailto:joep@plusones.ai?subject=Kennismaking%20PlusOnes">plan een kennismaking</a>
+      <a class="nav__cta" href="#contact">plan een kennismaking</a>
     </nav>
     <div class="header__mobile">
       <div class="lang" role="group" aria-label="Taal / Language" data-notranslate>
@@ -44,7 +44,7 @@
     <a href="#bewijs">Cases</a>
     <a href="#team">Team</a>
     <a href="#faq">FAQ</a>
-    <a class="mobile-menu__cta" href="mailto:joep@plusones.ai?subject=Kennismaking%20PlusOnes">Plan een kennismaking</a>
+    <a class="mobile-menu__cta" href="#contact">Plan een kennismaking</a>
   </nav>
 </header>
 
@@ -66,7 +66,7 @@
     <div class="hero__row">
       <p class="hero__sub">Wij brengen MKB-bedrijven van AI-experiment naar dagelijks resultaat met Claude. We integreren Claude in je werkomgeving en leren je teams zelf +1's bouwen.</p>
       <div class="btn-row">
-        <a class="btn btn--green" href="mailto:joep@plusones.ai?subject=Kennismaking%20PlusOnes">Plan een kennismaking <span aria-hidden="true">→</span></a>
+        <a class="btn btn--green" href="#contact">Plan een kennismaking <span aria-hidden="true">→</span></a>
         <a class="btn btn--outline" href="#diensten">Bekijk de diensten</a>
       </div>
     </div>
@@ -176,7 +176,7 @@
       </li>
     </ol>
     <p class="closing">Zo wordt Claude geen losse tool, maar een vermogen dat je organisatie zelf blijft gebruiken, verbeteren en uitbreiden.</p>
-    <a class="btn btn--ink" href="mailto:joep@plusones.ai?subject=Kennismaking%20PlusOnes">Plan een kennismaking <span aria-hidden="true">→</span></a>
+    <a class="btn btn--ink" href="#contact">Plan een kennismaking <span aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -199,7 +199,7 @@
           <li><strong>Meer ruimte om te vernieuwen.</strong> Ideeën test je in dagen, processen verbeter je continu.</li>
           <li><strong>Resultaat dat je kunt aantonen.</strong> Vanaf de nulmeting zie je wat Claude oplevert in jullie eigen cijfers.</li>
         </ul>
-        <a class="btn btn--ink" href="mailto:joep@plusones.ai?subject=Kennismaking%20PlusOnes">Plan een kennismaking <span aria-hidden="true">→</span></a>
+        <a class="btn btn--ink" href="#contact">Plan een kennismaking <span aria-hidden="true">→</span></a>
       </div>
     </article>
   </div>
@@ -281,7 +281,7 @@
         <div class="member__name"><h3>Joep Voskuilen</h3><span class="member__role">Co-founder</span></div>
         <p class="member__bio">Jarenlang in de leiding van een grote social agency, laatst als Business Growth Director. Maakte het bedrijf verkoopklaar. Thuis aan de directietafel: finance, operations en M&amp;A.</p>
         <div class="member__links">
-          <a class="chip-btn chip-btn--ink" href="mailto:joep@plusones.ai" aria-label="Mail Joep Voskuilen">contact <span aria-hidden="true">→</span></a>
+          <a class="chip-btn chip-btn--ink" href="#contact" aria-label="Neem contact op met Joep Voskuilen">contact <span aria-hidden="true">→</span></a>
           <a class="chip-btn" href="https://www.linkedin.com/in/joepvoskuilen/" target="_blank" rel="noopener" aria-label="LinkedIn van Joep Voskuilen">LinkedIn <span aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -290,7 +290,7 @@
         <div class="member__name"><h3>Guido Kloek</h3><span class="member__role">Co-founder</span></div>
         <p class="member__bio">Twintig jaar op het snijvlak van creativiteit en business. Van tv tot ondernemer en aandeelhouder in een bureaugroep. Vanuit Amsterdam en Kaapstad, met de AI-transitie als focus.</p>
         <div class="member__links">
-          <a class="chip-btn chip-btn--ink" href="mailto:guido@plusones.ai" aria-label="Mail Guido Kloek">contact <span aria-hidden="true">→</span></a>
+          <a class="chip-btn chip-btn--ink" href="#contact" aria-label="Neem contact op met Guido Kloek">contact <span aria-hidden="true">→</span></a>
           <a class="chip-btn" href="https://www.linkedin.com/in/guidokloek/" target="_blank" rel="noopener" aria-label="LinkedIn van Guido Kloek">LinkedIn <span aria-hidden="true">→</span></a>
         </div>
       </article>
@@ -362,14 +362,17 @@
       <h2 class="h2 h2--sm" id="contact-h">Plan een kennismaking</h2>
       <p class="lead" style="max-width:440px;font-size:17px">We reageren binnen één werkdag. Liever direct? Mail of bel een van ons.</p>
       <div class="contact__direct">
-        <a href="mailto:joep@plusones.ai">joep@plusones.ai</a>
-        <a href="mailto:guido@plusones.ai">guido@plusones.ai</a>
+        <a href="#contact">joep@plusones.ai</a>
+        <a href="#contact">guido@plusones.ai</a>
         <a href="tel:+31618329532">+31 6 18329532</a>
         <address>Koepelgevangenis<br>Koepelplein 1, 2031 WL Haarlem</address>
       </div>
     </div>
 
-    <form class="form" id="contact-form" novalidate aria-describedby="form-status">
+    <form class="form" id="contact-form" name="contact" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field" novalidate aria-describedby="form-status">
+      <input type="hidden" name="form-name" value="contact">
+      <input type="hidden" name="subject" value="Nieuwe kennismakingsaanvraag via plusones.ai">
+      <p hidden><label>Niet invullen: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
       <div class="field" data-field="name">
         <label for="f-naam">Naam</label>
         <input id="f-naam" name="naam" type="text" autocomplete="name" required aria-describedby="e-naam">
@@ -379,6 +382,11 @@
         <label for="f-bedrijf">Bedrijf</label>
         <input id="f-bedrijf" name="bedrijf" type="text" autocomplete="organization" required aria-describedby="e-bedrijf">
         <span class="field__err" id="e-bedrijf"></span>
+      </div>
+      <div class="field field--full" data-field="email">
+        <label for="f-email">E-mail</label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+        <span class="field__err" id="e-email"></span>
       </div>
       <div class="field field--full" data-field="size">
         <label for="f-grootte">Bedrijfsgrootte</label>
@@ -404,7 +412,7 @@
 
     <div class="success" id="form-success" role="status" hidden>
       <h3 tabindex="-1">Bedankt, <span data-notranslate id="sent-name"></span>.</h3>
-      <p>Je mailprogramma opent met je bericht aan Joep. Verstuur het daar, dan reageren we binnen één werkdag.</p>
+      <p>Je bericht is verstuurd naar Joep en Guido. We reageren binnen één werkdag.</p>
       <button class="link-btn" type="button" id="form-reset">Nog een vraag sturen</button>
     </div>
   </div>
@@ -425,8 +433,8 @@
       </div>
       <div class="footer__col">
         <p class="footer__label">Contact</p>
-        <a href="mailto:joep@plusones.ai">joep@plusones.ai</a>
-        <a href="mailto:guido@plusones.ai">guido@plusones.ai</a>
+        <a href="#contact">joep@plusones.ai</a>
+        <a href="#contact">guido@plusones.ai</a>
         <address><span>Koepelgevangenis</span><span>Koepelplein 1</span><span>2031 WL Haarlem</span></address>
       </div>
       <div class="footer__col">
